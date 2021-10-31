@@ -1,0 +1,2 @@
+MOV Al, 1Ch
+ROL Al, 1
