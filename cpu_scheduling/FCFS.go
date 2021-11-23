@@ -9,31 +9,31 @@ type process struct {
 	turnaround_time int
 }
 
-func findWaitingTime(iptrProcess *[]process) {
+func findWaitingTime(Process []process) {
 
-	var serviceTime = make([]int, len(*iptrProcess))
+	var serviceTime = make([]int, len(Process))
 
-	serviceTime[0] = (*iptrProcess)[0].arrival_time
-	for i := 1; i < len(*iptrProcess); i++ {
-		prev := (*iptrProcess)[i-1]
+	serviceTime[0] = Process[0].arrival_time
+	for i := 1; i < len(Process); i++ {
+		prev := Process[i-1]
 		serviceTime[i] = serviceTime[i-1] + prev.brust_time
-		(*iptrProcess)[i].waiting_time = serviceTime[i] - (*iptrProcess)[i].arrival_time
+		Process[i].waiting_time = serviceTime[i] - Process[i].arrival_time
 
-		if (*iptrProcess)[i].waiting_time < 0 {
-			(*iptrProcess)[i].waiting_time = 0
+		if Process[i].waiting_time < 0 {
+			Process[i].waiting_time = 0
 		}
 	}
 }
 
-func findTurnAroundTime(iptrProcess *[]process) {
-	for i := 0; i < len(*iptrProcess); i++ {
-		(*iptrProcess)[i].turnaround_time = (*iptrProcess)[i].brust_time + (*iptrProcess)[i].waiting_time
+func findTurnAroundTime(Process []process) {
+	for i := 0; i < len(Process); i++ {
+		Process[i].turnaround_time = Process[i].brust_time + Process[i].waiting_time
 	}
 }
 
 func findAvgTime(processes []process) {
-	findWaitingTime(&processes)
-	findTurnAroundTime(&processes)
+	findWaitingTime(processes)
+	findTurnAroundTime(processes)
 	fmt.Print("Process ", "Burst ", " Arrival ", "Waiting ", "Turn-Around ", "Completion \n")
 
 	total_turnaround, total_waiting_time := 0, 0
